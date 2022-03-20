@@ -3,7 +3,7 @@ import Clock from './components/Clock';
 function App() {
     return (
         <div>
-            <Clock />
+            <Clock locale="bn-BD" />
         </div>
     );
 }
