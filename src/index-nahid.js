@@ -14,7 +14,7 @@ function useState(defaultValue) {
     const setValue = (newValue) => {
         states[index][0] = newValue;
         // eslint-disable-next-line no-use-before-define
-        renderWithSumit();
+        renderwithnahid();
     };
 
     const returnArray = [defaultValue, setValue];
@@ -48,12 +48,12 @@ function App() {
     );
 }
 
-function renderWithSumit() {
+function renderwithnahid() {
     stateIndex = -1;
     ReactDOM.render(<App />, document.getElementById('root'));
 }
 
-renderWithSumit();
+renderwithnahid();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
