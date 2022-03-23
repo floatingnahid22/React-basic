@@ -1,37 +1,61 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+// import reportWebVitals from "./reportWebVitals";
 
-class Todo extends React.Component {
-    state = {
-        todo: '',
-        warning: null,
+const states = [];
+let stateIndex = 0;
+
+function useState(defaultValue) {
+    // eslint-disable-next-line no-plusplus
+    const index = ++stateIndex;
+
+    if (states[index]) return states[index];
+
+    const setValue = (newValue) => {
+        states[index][0] = newValue;
+        // eslint-disable-next-line no-use-before-define
+        renderWithSumit();
     };
 
-    handleInput = (e) => {
+    const returnArray = [defaultValue, setValue];
+    states[index] = returnArray;
+    return returnArray;
+}
+
+function App() {
+    const [todo, setTodo] = useState('');
+    const [warning, setWarning] = useState(null);
+
+    const handleInput = (e) => {
         const inputValue = e.target.value;
-        const warning = inputValue.includes('.js')
+        const updatedWarning = inputValue.includes('.js')
             ? 'You need JavaScript skill to complete the task. Do you have it?'
             : null;
 
-        this.setState({
-            todo: inputValue,
-            warning,
-        });
+        setTodo(inputValue);
+        setWarning(updatedWarning);
     };
 
-    render() {
-        const { todo, warning } = this.state;
-
-        return (
-            <div>
-                <p>{todo}</p>
-                <p>
-                    <textarea name="todo" value={todo} onChange={this.handleInput} />
-                </p>
-                <hr />
-                <h2>{warning || 'Good choice!'}</h2>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <p>{todo}</p>
+            <p>
+                <textarea name="todo" value={todo} onChange={handleInput} />
+            </p>
+            <hr />
+            <p>{warning || 'Good choice!'}</p>
+        </div>
+    );
 }
 
-export default Todo;
+function renderWithSumit() {
+    stateIndex = -1;
+    ReactDOM.render(<App />, document.getElementById('root'));
+}
+
+renderWithSumit();
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// reportWebVitals();
