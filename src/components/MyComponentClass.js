@@ -1,42 +1,53 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 
-export default function MyComponent() {
-    const [count, setCount] = useState(0);
-    const [date, setDate] = useState(new Date());
-
-    const tick = () => {
-        console.log(`clock ticking!`);
-        setDate(new Date());
+class MyComponent extends React.Component {
+    state = {
+        count: 0,
+        date: new Date(),
     };
 
-    useEffect(() => {
-        console.log('updating document title');
+    componentDidMount() {
+        const { count } = this.state;
         document.title = `Clicked ${count} times`;
-    }, [count]);
+        this.interval = setInterval(this.tick, 1000);
+    }
 
-    useEffect(() => {
-        console.log('starting timer');
-        const interval = setInterval(tick, 1000);
+    componentDidUpdate() {
+        const { count } = this.state;
+        document.title = `Clicked ${count} times`;
+    }
 
-        // do the cleanup - stop the timer
-        return () => {
-            console.log('component unmounted');
-            clearInterval(interval);
-        };
-    }, []);
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
 
-    const addClick = () => {
-        setCount((prevCount) => prevCount + 1);
+    addClick = () => {
+        this.setState(({ count }) => ({
+            count: count + 1,
+        }));
     };
 
-    return (
-        <div>
-            <p>Time: {date.toLocaleTimeString()}</p>
-            <p>
-                <button type="button" onClick={addClick}>
-                    Click
-                </button>
-            </p>
-        </div>
-    );
+    tick = () => {
+        console.log('clock ticking');
+        this.setState({
+            date: new Date(),
+        });
+    };
+
+    render() {
+        const { date } = this.state;
+
+        return (
+            <div>
+                <p>Time: {date.toLocaleTimeString()}</p>
+                <p>
+                    <button type="button" onClick={this.addClick}>
+                        Click
+                    </button>
+                </p>
+            </div>
+        );
+    }
 }
+
+export default MyComponent;
