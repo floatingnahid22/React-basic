@@ -1,15 +1,9 @@
 import React from 'react';
 
-function Button({ handleClick, children }) {
-    console.log(`rendering button ${children}`);
+function Title() {
+    console.log('rendering title...');
 
-    return (
-        <p>
-            <button type="button" onClick={handleClick}>
-                {children}
-            </button>
-        </p>
-    );
+    return <h2>useCallback Hook Tutorial</h2>;
 }
 
-export default React.memo(Button);
+export default React.memo(Title);
