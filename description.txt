@@ -101,3 +101,7 @@ right corner beside split editor option. Paste the below json in the newly creat
 after installing this you must install or set up eslint and prettier.
 eslint: https://eslint.org/docs/user-guide/getting-started
 prettier: https://prettier.io/docs/en/install.html
+
+
+install styled components:
+npm i styled-components
